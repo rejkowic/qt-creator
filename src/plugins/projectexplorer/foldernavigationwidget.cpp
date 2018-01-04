@@ -332,6 +332,7 @@ void FolderNavigationWidget::openProjectsInDirectory(const QModelIndex &index)
 void FolderNavigationWidget::contextMenuEvent(QContextMenuEvent *ev)
 {
     QMenu menu;
+    QAction *cd = menu.addAction("cd HERE");
     // Open current item
     const QModelIndex current = m_listView->currentIndex();
     const bool hasCurrentItem = current.isValid();
@@ -373,6 +374,8 @@ void FolderNavigationWidget::contextMenuEvent(QContextMenuEvent *ev)
         ProjectExplorerPlugin::openProject(filePath.toString());
     else if (action == actionOpenProjects)
         openProjectsInDirectory(current);
+    else if (action == cd)
+        emit Core::EditorManager::instance()->cdHere(filePath.toString());
 }
 
 void FolderNavigationWidget::setHiddenFilesFilter(bool filter)
